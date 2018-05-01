@@ -2,6 +2,7 @@ package com.adrian.services;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
+import com.adrian.services.GreetingService;
 
 import com.adrian.producers.LoggerProducer;
 
