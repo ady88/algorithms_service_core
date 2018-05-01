@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class SortResponse<T> {
 	private T[] initialArray;
 	private T[] sortedArray;
+	private String algorithmName;
 	private Status status;
 
 	public T[] getInitialArray() {
@@ -31,9 +32,17 @@ public class SortResponse<T> {
 		this.status = status;
 	}
 
+	public String getAlgorithmName() {
+		return algorithmName;
+	}
+
+	public void setAlgorithmName(String algorithmName) {
+		this.algorithmName = algorithmName;
+	}
+
 	@Override
 	public String toString() {
 		return "SortResponse [initialArray=" + Arrays.toString(initialArray) + ", sortedArray="
-				+ Arrays.toString(sortedArray) + ", status=" + status + "]";
+				+ Arrays.toString(sortedArray) + ", algorithmName=" + algorithmName + ", status=" + status + "]";
 	}
 }

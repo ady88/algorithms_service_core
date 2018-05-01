@@ -1,5 +1,7 @@
 package com.adrian.services;
 
+import java.util.function.BiPredicate;
+
 import com.adrian.services.responses.SortResponse;
 import com.adrian.services.responses.SortResponseWithSteps;
 
@@ -8,8 +10,8 @@ import com.adrian.services.responses.SortResponseWithSteps;
  * 
  * @param <T>
  */
-public interface SortService<T> {
-	SortResponse<T> sort(T[] array);
+public interface SortService<T extends Comparable<T>> {
+	SortResponse<T> sort(T[] array,  BiPredicate<T, T> predicate);
 
-	SortResponseWithSteps<T> sortWithSteps(T[] array);
+	SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate);
 }
