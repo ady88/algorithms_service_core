@@ -25,4 +25,12 @@ public class AlgorithmsUtil<T> {
 
 		return result;
 	}
+
+	public static <T> void insertionSort(T[] array, int start, int end, BiPredicate<T, T> predicate) {
+		for (int i = start + 1; i < end + 1; i++) {
+			for (int j = i; j > start && predicate.test(array[j], array[j - 1]); j--) {
+				AlgorithmsUtil.exchange(array, j, j - 1);
+			}
+		}
+	}
 }

@@ -23,7 +23,6 @@ public class InsertionSortService<T extends Comparable<T>> implements SortServic
 			for (int j = i; j > 0 && predicate.test(array[j], array[j - 1]); j--) {
 				AlgorithmsUtil.exchange(array, j - 1, j);
 			}
-
 		}
 
 		response.setSortedArray(array);

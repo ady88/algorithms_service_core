@@ -1,6 +1,5 @@
 package com.adrian.services;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -23,7 +22,9 @@ public class Main {
 
 		try (SeContainer container = initializer.disableDiscovery()
 				.addBeanClasses(GreetingService.class, LoggerProducer.class, SelectionSortService.class,
-						InsertionSortService.class, ShellSortService.class, SortServiceProducer.class)
+						InsertionSortService.class, ShellSortService.class, SortServiceProducer.class,
+						MergeSortService.class, ImprovedMergeSortService.class, QuickSortService.class,
+						ImprovedQuickSortService.class)
 				.initialize()) {
 
 			var service = container.select(GreetingService.class).get();
@@ -31,7 +32,7 @@ public class Main {
 			@SuppressWarnings("unchecked")
 			SortService<Integer> sortService = (SortService<Integer>) container.select(SortService.class).get();
 
-//			var array = new Integer[] { 9, 2, 1, 6, 4, 7, 0, 8, 3, 5 };
+			// var array = new Integer[] { 9, 2, 1, 6, 4, 7, 0, 8, 3, 5 };
 
 			Random random = new Random();
 			var unboxedArray = random.ints(ARRAY_SIZE, LOWER_BOUND, UPPER_BOUND).toArray();
@@ -40,14 +41,14 @@ public class Main {
 
 			var startTime = System.currentTimeMillis();
 
-			SortResponse<Integer> response = sortService.sort(array, (x, y) -> y > x);
+			SortResponse<Integer> response = sortService.sort(array, (x, y) -> x < y);
 
 			var duration = System.currentTimeMillis() - startTime;
 
 			// System.out.println(Arrays.toString(array));
 			System.out.println(String.format("DURATION: %d", duration));
 
-			var isValidSort = AlgorithmsUtil.validateSort(array, (x, y) -> y > x);
+			var isValidSort = AlgorithmsUtil.validateSort(array, (x, y) -> x < y);
 
 			// System.out.println(response);
 			System.out.println(isValidSort);
