@@ -2,6 +2,7 @@ package com.adrian.services.responses;
 
 public class Step {
 	private String label;
+	private int rank;
 	private String description;
 
 	public String getLabel() {
@@ -18,6 +19,14 @@ public class Step {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 
 	@Override
