@@ -4,32 +4,13 @@ import java.util.function.BiPredicate;
 
 import com.adrian.enums.SortAlgorithm;
 import com.adrian.qualifiers.QuickSort;
-import com.adrian.services.responses.SortResponse;
 import com.adrian.services.responses.SortResponseWithSteps;
-import com.adrian.services.responses.Status;
 import com.adrian.utils.AlgorithmsUtil;
 
 @QuickSort
-public class QuickSortService<T extends Comparable<T>> implements SortService<T> {
+public class QuickSortService<T extends Comparable<T>> extends AbstractSortService<T> {
 
-	BiPredicate<T, T> predicate;
-
-	@Override
-	public SortResponse<T> sort(T[] array, BiPredicate<T, T> predicate) {
-		SortResponse<T> response = new SortResponse<T>();
-		response.setInitialArray(array.clone());
-		this.predicate = predicate;
-
-		sort(array, 0, array.length - 1);
-
-		response.setSortedArray(array);
-		Status responseStatus = new Status();
-		responseStatus.setCode(200);
-		responseStatus.setText("OK");
-		response.setStatus(responseStatus);
-		response.setAlgorithmName(SortAlgorithm.MERGE_SORT.name());
-		return response;
-	}
+	protected BiPredicate<T, T> predicate;
 
 	@Override
 	public SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate) {
@@ -74,5 +55,16 @@ public class QuickSortService<T extends Comparable<T>> implements SortService<T>
 
 		AlgorithmsUtil.exchange(array, low, rightIndex);
 		return rightIndex;
+	}
+
+	@Override
+	protected void actualSort(T[] array, BiPredicate<T, T> predicate) {
+		this.predicate = predicate;
+		sort(array, 0, array.length - 1);
+	}
+
+	@Override
+	protected String getAlgorithmName() {
+		return SortAlgorithm.QUICK_SORT.name();
 	}
 }

@@ -4,19 +4,19 @@ import java.util.function.BiPredicate;
 
 import com.adrian.enums.SortAlgorithm;
 import com.adrian.qualifiers.SelectionSort;
-import com.adrian.services.responses.SortResponse;
 import com.adrian.services.responses.SortResponseWithSteps;
-import com.adrian.services.responses.Status;
 import com.adrian.utils.AlgorithmsUtil;
 
 @SelectionSort
-public class SelectionSortService<T extends Comparable<T>> implements SortService<T> {
+public class SelectionSortService<T extends Comparable<T>> extends AbstractSortService<T> {
 
 	@Override
-	public SortResponse<T> sort(T[] array, BiPredicate<T, T> predicate) {
-		SortResponse<T> response = new SortResponse<T>();
+	public SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate) {
+		return null;
+	}
 
-		response.setInitialArray(array.clone());
+	@Override
+	protected void actualSort(T[] array, BiPredicate<T, T> predicate) {
 		int length = array.length;
 
 		for (int i = 0; i < length - 1; i++) {
@@ -28,18 +28,10 @@ public class SelectionSortService<T extends Comparable<T>> implements SortServic
 			}
 			AlgorithmsUtil.exchange(array, min, i);
 		}
-
-		response.setSortedArray(array);
-		Status responseStatus = new Status();
-		responseStatus.setCode(200);
-		responseStatus.setText("OK");
-		response.setStatus(responseStatus);
-		response.setAlgorithmName(SortAlgorithm.SELECTION_SORT.name());
-		return response;
 	}
 
 	@Override
-	public SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate) {
-		return null;
+	protected String getAlgorithmName() {
+		return SortAlgorithm.SELECTION_SORT.name();
 	}
 }

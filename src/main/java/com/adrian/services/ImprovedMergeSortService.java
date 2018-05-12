@@ -1,6 +1,7 @@
 package com.adrian.services;
 
 import com.adrian.constants.SortConstants;
+import com.adrian.enums.SortAlgorithm;
 import com.adrian.qualifiers.ImprovedMergeSort;
 import com.adrian.utils.AlgorithmsUtil;
 
@@ -21,5 +22,10 @@ public class ImprovedMergeSortService<T extends Comparable<T>> extends MergeSort
 		if (predicate.test(array[middle + 1], array[middle])) {
 			merge(array, low, middle, high);
 		}
+	}
+
+	@Override
+	protected String getAlgorithmName() {
+		return SortAlgorithm.IMPROVED_MERGE_SORT.name();
 	}
 }

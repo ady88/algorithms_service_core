@@ -4,39 +4,16 @@ import java.util.function.BiPredicate;
 
 import com.adrian.enums.SortAlgorithm;
 import com.adrian.qualifiers.MergeSort;
-import com.adrian.services.responses.SortResponse;
 import com.adrian.services.responses.SortResponseWithSteps;
-import com.adrian.services.responses.Status;
 
 @MergeSort
-public class MergeSortService<T extends Comparable<T>> implements SortService<T> {
+public class MergeSortService<T extends Comparable<T>> extends AbstractSortService<T> {
 
 	private T[] aux;
 	BiPredicate<T, T> predicate;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public SortResponse<T> sort(T[] array, BiPredicate<T, T> predicate) {
-		SortResponse<T> response = new SortResponse<T>();
-
-		response.setInitialArray(array.clone());
-		int length = array.length;
-		aux = ((T[]) new Comparable[length]);
-		this.predicate = predicate;
-		sort(array, 0, length - 1);
-
-		response.setSortedArray(array);
-		Status responseStatus = new Status();
-		responseStatus.setCode(200);
-		responseStatus.setText("OK");
-		response.setStatus(responseStatus);
-		response.setAlgorithmName(SortAlgorithm.MERGE_SORT.name());
-		return response;
-	}
-
 	@Override
 	public SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -71,5 +48,20 @@ public class MergeSortService<T extends Comparable<T>> implements SortService<T>
 		sort(array, low, middle);
 		sort(array, middle + 1, high);
 		merge(array, low, middle, high);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void actualSort(T[] array, BiPredicate<T, T> predicate) {
+		int length = array.length;
+		aux = ((T[]) new Comparable[length]);
+		this.predicate = predicate;
+		sort(array, 0, length - 1);
+		
+	}
+
+	@Override
+	protected String getAlgorithmName() {
+		return SortAlgorithm.MERGE_SORT.name();
 	}
 }
