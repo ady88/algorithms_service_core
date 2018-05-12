@@ -3,7 +3,6 @@ package com.adrian.services;
 import java.util.function.BiPredicate;
 
 import com.adrian.constants.StatusConstants;
-import com.adrian.enums.SortAlgorithm;
 import com.adrian.services.responses.SortResponse;
 import com.adrian.services.responses.Status;
 
@@ -14,26 +13,29 @@ public abstract class AbstractSortService<T extends Comparable<T>> implements So
 		SortResponse<T> response = new SortResponse<T>();
 
 		response.setInitialArray(array.clone());
-
+		long startTime = System.currentTimeMillis();
 		actualSort(array, predicate);
+		response.setDuration(System.currentTimeMillis() - startTime);
 
 		response.setSortedArray(array);
 		Status responseStatus = new Status();
 		responseStatus.setCode(StatusConstants.OK_CODE);
 		responseStatus.setText(StatusConstants.OK_MESSAGE);
 		response.setStatus(responseStatus);
-		response.setAlgorithmName(SortAlgorithm.INSERTION_SORT.name());
+		response.setAlgorithmName(getAlgorithmName());
 		return response;
 	}
 
 	/**
 	 * Perform the sorting of the given array using the provided predicate.
 	 * 
-	 * @param array the array to be sorted
-	 * @param predicate the predicate used for the sorting
+	 * @param array
+	 *            the array to be sorted
+	 * @param predicate
+	 *            the predicate used for the sorting
 	 */
 	protected abstract void actualSort(T[] array, BiPredicate<T, T> predicate);
-	
+
 	/**
 	 * Get the name of the sorting algorithm used.
 	 * 

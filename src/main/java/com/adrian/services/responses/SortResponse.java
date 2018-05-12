@@ -1,12 +1,11 @@
 package com.adrian.services.responses;
 
-import java.util.Arrays;
-
 public class SortResponse<T> {
 	private T[] initialArray;
 	private T[] sortedArray;
 	private String algorithmName;
 	private Status status;
+	private long duration;
 
 	public T[] getInitialArray() {
 		return initialArray;
@@ -40,9 +39,11 @@ public class SortResponse<T> {
 		this.algorithmName = algorithmName;
 	}
 
-	@Override
-	public String toString() {
-		return "SortResponse [initialArray=" + Arrays.toString(initialArray) + ", sortedArray="
-				+ Arrays.toString(sortedArray) + ", algorithmName=" + algorithmName + ", status=" + status + "]";
+	public long getDuration() {
+		return duration;
+	}
+
+	public void setDuration(long duration) {
+		this.duration = duration;
 	}
 }
