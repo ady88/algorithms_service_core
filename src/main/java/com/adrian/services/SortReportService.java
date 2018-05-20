@@ -1,9 +1,7 @@
 package com.adrian.services;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.function.BiPredicate;
-import java.util.stream.IntStream;
 
 import javax.inject.Inject;
 
@@ -20,7 +18,7 @@ import com.adrian.qualifiers.ShellSort;
  * Holds methods for generating a sort report with statistic information about
  * each sort.
  */
-public class SortIntegersReportService {
+public abstract class SortReportService<T extends Comparable<T>> {
 
 	private static final int NUMBER_OF_RUNS = 10;
 	private static final String DURATION_REPORT_MESSAGE = "#### %s \n\n The time in milliseconds for each run \n ";
@@ -61,13 +59,11 @@ public class SortIntegersReportService {
 	@ImprovedQuickSort
 	private SortService improvedQuickSort;
 
-	public String getReport(int arraySize, int lowerBoundElement, int upperBoundElement,
-			BiPredicate<Integer, Integer> predicate) {
-		var random = new Random();
+	public String getReport(int arraySize, BiPredicate<Integer, Integer> predicate) {
 
 		StringBuilder sortReportBuilder = new StringBuilder(String.format(
-				"# SortReport \n\n###General information: \n _Size of the sorted array: %d_ \n _Number of runs: %d_ \n _Lower bound array element: %d_ \n _Upper bound array element: %d_ \n---\n",
-				arraySize, NUMBER_OF_RUNS, lowerBoundElement, upperBoundElement));
+				"# SortReport \n\n###General information: \n _Size of the sorted array: %d_ \n _Number of runs: %d_ \n---\n",
+				arraySize, NUMBER_OF_RUNS));
 
 		StringBuilder insertionSortReportBuilder = new StringBuilder(
 				String.format(DURATION_REPORT_MESSAGE, SortAlgorithm.INSERTION_SORT.name()));
@@ -95,9 +91,7 @@ public class SortIntegersReportService {
 		long improvedQuickSortTotalDuration = 0;
 		long javaArraysSortTotalDuration = 0;
 		for (int i = 0; i < NUMBER_OF_RUNS; i++) {
-			var unboxedArray = random.ints(arraySize, lowerBoundElement, upperBoundElement).toArray();
-
-			var array = IntStream.of(unboxedArray).boxed().toArray(Integer[]::new);
+			var array = getArray(arraySize);
 
 			@SuppressWarnings("unchecked")
 			var insertionSortResponse = insertionSort.sort(array.clone(), predicate);
@@ -158,7 +152,8 @@ public class SortIntegersReportService {
 		quickSortReportBuilder.append(String.format(AVERAGE_TIME_MESSAGE, quickSortTotalDuration / NUMBER_OF_RUNS));
 		improvedQuickSortReportBuilder
 				.append(String.format(AVERAGE_TIME_MESSAGE, improvedQuickSortTotalDuration / NUMBER_OF_RUNS));
-		javaArraysSortReportBuilder.append(String.format(AVERAGE_TIME_MESSAGE, javaArraysSortTotalDuration / NUMBER_OF_RUNS));
+		javaArraysSortReportBuilder
+				.append(String.format(AVERAGE_TIME_MESSAGE, javaArraysSortTotalDuration / NUMBER_OF_RUNS));
 
 		sortReportBuilder.append(insertionSortReportBuilder.toString());
 		sortReportBuilder.append(selectionSortReportBuilder.toString());
@@ -171,4 +166,10 @@ public class SortIntegersReportService {
 
 		return sortReportBuilder.toString();
 	}
+
+	protected abstract T[] getArray(int arraySize);
+
+	protected abstract T getLowerBoundElement();
+
+	protected abstract T getUpperBoundElement();
 }

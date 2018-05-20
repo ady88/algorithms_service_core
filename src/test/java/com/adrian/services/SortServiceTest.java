@@ -1,9 +1,12 @@
 package com.adrian.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.jboss.weld.junit5.WeldInitiator;
 import org.jboss.weld.junit5.WeldJunit5Extension;
 import org.jboss.weld.junit5.WeldSetup;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -69,7 +72,7 @@ public class SortServiceTest {
 		SortResponse<Integer> response = sortService.sort(array, (x, y) -> x < y);
 		assertIfSorted(response, SortAlgorithm.MERGE_SORT.name());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testImprovedMergeSort() {
@@ -79,7 +82,7 @@ public class SortServiceTest {
 		SortResponse<Integer> response = sortService.sort(array, (x, y) -> x < y);
 		assertIfSorted(response, SortAlgorithm.IMPROVED_MERGE_SORT.name());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testQuickSort() {
@@ -89,7 +92,7 @@ public class SortServiceTest {
 		SortResponse<Integer> response = sortService.sort(array, (x, y) -> x < y);
 		assertIfSorted(response, SortAlgorithm.QUICK_SORT.name());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testImprovedQuickSort() {
@@ -101,13 +104,13 @@ public class SortServiceTest {
 	}
 
 	private void assertIfSorted(SortResponse<Integer> response, String expectedAlgorithmName) {
-		Assert.assertNotNull(response);
+		assertNotNull(response);
 		Integer[] sortedArray = response.getSortedArray();
-		Assert.assertNotNull(sortedArray);
-		Assert.assertEquals(expectedAlgorithmName, response.getAlgorithmName());
+		assertNotNull(sortedArray);
+		assertEquals(expectedAlgorithmName, response.getAlgorithmName());
 
 		for (int j = 1; j < sortedArray.length; j++) {
-			Assert.assertTrue("Array is not sorted", sortedArray[j - 1] <= sortedArray[j]);
+			assertTrue(sortedArray[j - 1] <= sortedArray[j]);
 		}
 	}
 }
