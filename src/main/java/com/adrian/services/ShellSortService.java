@@ -1,18 +1,20 @@
 package com.adrian.services;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 
 import com.adrian.enums.SortAlgorithm;
 import com.adrian.qualifiers.ShellSort;
-import com.adrian.services.responses.SortResponseWithSteps;
+import com.adrian.services.responses.Step;
 import com.adrian.utils.AlgorithmsUtil;
 
 @ShellSort
 public class ShellSortService<T extends Comparable<T>> extends AbstractSortService<T> {
 
 	@Override
-	public SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate) {
-		return null;
+	protected void actualSortWithSteps(T[] array, BiPredicate<T, T> predicate, List<Step> steps) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

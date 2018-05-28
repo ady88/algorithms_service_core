@@ -1,10 +1,11 @@
 package com.adrian.services;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 
 import com.adrian.enums.SortAlgorithm;
 import com.adrian.qualifiers.QuickSort;
-import com.adrian.services.responses.SortResponseWithSteps;
+import com.adrian.services.responses.Step;
 import com.adrian.utils.AlgorithmsUtil;
 
 @QuickSort
@@ -13,11 +14,11 @@ public class QuickSortService<T extends Comparable<T>> extends AbstractSortServi
 	protected BiPredicate<T, T> predicate;
 
 	@Override
-	public SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate) {
+	protected void actualSortWithSteps(T[] array, BiPredicate<T, T> predicate, List<Step> steps) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
-
+	
 	protected void sort(T[] array, int low, int high) {
 		if (high <= low) {
 			return;

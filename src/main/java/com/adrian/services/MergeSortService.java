@@ -1,10 +1,11 @@
 package com.adrian.services;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 
 import com.adrian.enums.SortAlgorithm;
 import com.adrian.qualifiers.MergeSort;
-import com.adrian.services.responses.SortResponseWithSteps;
+import com.adrian.services.responses.Step;
 
 @MergeSort
 public class MergeSortService<T extends Comparable<T>> extends AbstractSortService<T> {
@@ -13,10 +14,11 @@ public class MergeSortService<T extends Comparable<T>> extends AbstractSortServi
 	BiPredicate<T, T> predicate;
 
 	@Override
-	public SortResponseWithSteps<T> sortWithSteps(T[] array, BiPredicate<T, T> predicate) {
-		return null;
+	protected void actualSortWithSteps(T[] array, BiPredicate<T, T> predicate, List<Step> steps) {
+		// TODO Auto-generated method stub
+
 	}
-	
+
 	protected void merge(T[] array, int low, int middle, int high) {
 		// merge array[low...middle] with array[middle + 1...high]
 
@@ -57,7 +59,7 @@ public class MergeSortService<T extends Comparable<T>> extends AbstractSortServi
 		aux = ((T[]) new Comparable[length]);
 		this.predicate = predicate;
 		sort(array, 0, length - 1);
-		
+
 	}
 
 	@Override
