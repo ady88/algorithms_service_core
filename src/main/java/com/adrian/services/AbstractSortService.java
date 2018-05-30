@@ -18,9 +18,10 @@ public abstract class AbstractSortService<T extends Comparable<T>> implements So
 
 		response.setInitialArray(array.clone());
 		long startTime = System.currentTimeMillis();
-		actualSortWithSteps(array, predicate, new ArrayList<Step>());
+		ArrayList<Step> steps = new ArrayList<Step>();
+		actualSortWithSteps(array, predicate, steps);
 		response.setDuration(System.currentTimeMillis() - startTime);
-
+		response.setSteps(steps);
 		response.setSortedArray(array);
 		Status responseStatus = new Status();
 		responseStatus.setCode(StatusConstants.OK_CODE);
@@ -30,7 +31,6 @@ public abstract class AbstractSortService<T extends Comparable<T>> implements So
 		return response;
 	}
 
-	
 	@Override
 	public SortResponse<T> sort(T[] array, BiPredicate<T, T> predicate) {
 		SortResponse<T> response = new SortResponse<T>();
@@ -58,9 +58,10 @@ public abstract class AbstractSortService<T extends Comparable<T>> implements So
 	 *            the predicate used for the sorting
 	 */
 	protected abstract void actualSort(T[] array, BiPredicate<T, T> predicate);
-	
+
 	/**
-	 * Perform the sorting of the given array using the provided predicate and also records the steps used.
+	 * Perform the sorting of the given array using the provided predicate and also
+	 * records the steps used.
 	 * 
 	 * @param array
 	 * @param predicate

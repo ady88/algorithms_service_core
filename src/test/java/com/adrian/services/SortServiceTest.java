@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adrian.enums.SortAlgorithm;
 import com.adrian.services.responses.SortResponse;
+import com.adrian.services.responses.SortResponseWithSteps;
 
 @ExtendWith(WeldJunit5Extension.class)
 public class SortServiceTest {
@@ -45,6 +46,14 @@ public class SortServiceTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
+	public void testInsertionSortWithDescription() {
+		sortService = (SortService<Integer>) weld.select(InsertionSortService.class.getAnnotations()[0]).get();
+		SortResponseWithSteps<Integer> response = sortService.sortWithSteps(array, (x, y) -> x < y);
+		assertIfSorted(response, SortAlgorithm.INSERTION_SORT.name());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
 	public void testSelectionSort() {
 
 		sortService = (SortService<Integer>) weld.select(SelectionSortService.class.getAnnotations()[0]).get();
@@ -55,11 +64,27 @@ public class SortServiceTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
+	public void testSelectionSortWithDescription() {
+		sortService = (SortService<Integer>) weld.select(SelectionSortService.class.getAnnotations()[0]).get();
+		SortResponseWithSteps<Integer> response = sortService.sortWithSteps(array, (x, y) -> x < y);
+		assertIfSorted(response, SortAlgorithm.SELECTION_SORT.name());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
 	public void testShellSort() {
 
 		sortService = (SortService<Integer>) weld.select(ShellSortService.class.getAnnotations()[0]).get();
 
 		SortResponse<Integer> response = sortService.sort(array, (x, y) -> x < y);
+		assertIfSorted(response, SortAlgorithm.SHELL_SORT.name());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testShellSortWithDescription() {
+		sortService = (SortService<Integer>) weld.select(ShellSortService.class.getAnnotations()[0]).get();
+		SortResponseWithSteps<Integer> response = sortService.sortWithSteps(array, (x, y) -> x < y);
 		assertIfSorted(response, SortAlgorithm.SHELL_SORT.name());
 	}
 

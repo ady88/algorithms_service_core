@@ -18,7 +18,7 @@ public class InsertionSortService<T extends Comparable<T>> extends AbstractSortS
 
 		for (int i = 1; i < length; i++) {
 			final Step insertItemStep = new Step("Insert item step.", i,
-					String.format("Insert item at position %d in the sorted array"));
+					String.format("Insert item at position %d in the sorted array", i));
 			int numberExchanges = 0;
 			for (int j = i; j > 0 && predicate.test(array[j], array[j - 1]); j--) {
 				AlgorithmsUtil.exchange(array, j - 1, j);
